@@ -1,0 +1,4 @@
+-keep class io.github.rosemoe.sora.** { *; }
+-keep class com.xmlstudio.app.** { *; }
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable

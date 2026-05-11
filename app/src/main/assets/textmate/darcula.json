@@ -1,0 +1,54 @@
+{
+  "name": "Darcula",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#2B2B2B",
+    "editor.foreground": "#A9B7C6",
+    "editorLineNumber.foreground": "#606366",
+    "editorLineNumber.activeForeground": "#A4A3A3",
+    "editor.selectionBackground": "#214283",
+    "editor.lineHighlightBackground": "#323232"
+  },
+  "tokenColors": [
+    {
+      "name": "Comment",
+      "scope": "comment",
+      "settings": { "foreground": "#808080", "fontStyle": "italic" }
+    },
+    {
+      "name": "Tag name",
+      "scope": "entity.name.tag",
+      "settings": { "foreground": "#E8BF6A" }
+    },
+    {
+      "name": "Attribute name",
+      "scope": "entity.other.attribute-name",
+      "settings": { "foreground": "#BABABA" }
+    },
+    {
+      "name": "String",
+      "scope": "string",
+      "settings": { "foreground": "#6A8759" }
+    },
+    {
+      "name": "Tag punctuation",
+      "scope": "punctuation.definition.tag",
+      "settings": { "foreground": "#E8BF6A" }
+    },
+    {
+      "name": "Entity",
+      "scope": "constant.character.entity",
+      "settings": { "foreground": "#CC7832" }
+    },
+    {
+      "name": "CDATA",
+      "scope": "string.unquoted.cdata",
+      "settings": { "foreground": "#808080" }
+    },
+    {
+      "name": "Processing",
+      "scope": "meta.tag.preprocessor",
+      "settings": { "foreground": "#808080" }
+    }
+  ]
+}

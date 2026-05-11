@@ -1,0 +1,8 @@
+[
+  {
+    "name": "XML",
+    "scopeName": "text.xml",
+    "grammar": "textmate/xml.tmLanguage.json",
+    "languageConfiguration": "textmate/xml-language-configuration.json"
+  }
+]

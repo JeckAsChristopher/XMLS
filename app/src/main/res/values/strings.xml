@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">XML Studio</string>
+    <string name="app_subtitle">Import, render, and create\nAndroid XML layouts</string>
+    <string name="export_xml">Import XML</string>
+    <string name="create_xml">Create XML</string>
+    <string name="version">v1.0.0</string>
+    <string name="select_xml_prompt">Select an XML file</string>
+    <string name="select_xml_desc">Choose an Android layout XML file to parse and render it as a native UI.</string>
+    <string name="pick_xml_file">Browse XML Files</string>
+    <string name="pick_any_file">Browse All Files</string>
+    <string name="pick_another">Import Another</string>
+    <string name="parsing_xml">Parsing XML…</string>
+    <string name="parse_error_title">Parse Error</string>
+    <string name="show_preview">Show Preview</string>
+    <string name="hide_preview">Hide Preview</string>
+    <string name="preview">PREVIEW</string>
+    <string name="action_undo">Undo</string>
+    <string name="action_redo">Redo</string>
+    <string name="action_format">Format XML</string>
+    <string name="action_clear">Clear</string>
+</resources>
