@@ -19,7 +19,7 @@ class XmlParser {
             val parser = factory.newPullParser().apply {
                 setInput(StringReader(xmlContent))
             }
-            val root = parseRecursive(parser)
+            val root = parseRoot(parser)
                 ?: return ParseResult.Failure("No root element found.")
             ParseResult.Success(root)
         } catch (e: Exception) {
@@ -27,70 +27,53 @@ class XmlParser {
         }
     }
 
-    private fun parseRecursive(parser: XmlPullParser): XmlNode? {
+    /**
+     * Advances through the document until it finds the first START_TAG,
+     * builds that node with all its children, and returns it.
+     */
+    private fun parseRoot(parser: XmlPullParser): XmlNode? {
         var eventType = parser.eventType
-        var currentNode: XmlNode? = null
-
         while (eventType != XmlPullParser.END_DOCUMENT) {
-            when (eventType) {
-                XmlPullParser.START_TAG -> {
-                    val tag = parser.name ?: "Unknown"
-                    val attributes = mutableMapOf<String, String>()
-                    for (i in 0 until parser.attributeCount) {
-                        val name = parser.getAttributeName(i)
-                        val value = parser.getAttributeValue(i)
-                        attributes[name] = value
-                    }
-                    val node = XmlNode(tag = tag, attributes = attributes)
-                    if (currentNode == null) {
-                        currentNode = node
-                        parseChildren(parser, currentNode)
-                        return currentNode
-                    }
-                }
-                XmlPullParser.END_TAG -> return currentNode
+            if (eventType == XmlPullParser.START_TAG) {
+                return buildNode(parser)
             }
             eventType = parser.next()
         }
-        return currentNode
+        return null
     }
 
-    private fun parseChildren(parser: XmlPullParser, parent: XmlNode) {
-        var eventType = parser.next()
+    /**
+     * Called when the parser is positioned on a START_TAG.
+     * Reads all children and text content, stops at the matching END_TAG.
+     */
+    private fun buildNode(parser: XmlPullParser): XmlNode {
+        val tag = parser.name ?: "Unknown"
+        val attributes = mutableMapOf<String, String>()
+        for (i in 0 until parser.attributeCount) {
+            attributes[parser.getAttributeName(i)] = parser.getAttributeValue(i)
+        }
+
+        val node = XmlNode(tag = tag, attributes = attributes)
         val textBuilder = StringBuilder()
 
+        var eventType = parser.next()
         while (eventType != XmlPullParser.END_DOCUMENT) {
             when (eventType) {
                 XmlPullParser.START_TAG -> {
-                    val tag = parser.name ?: "Unknown"
-                    val attributes = mutableMapOf<String, String>()
-                    for (i in 0 until parser.attributeCount) {
-                        val name = parser.getAttributeName(i)
-                        val value = parser.getAttributeValue(i)
-                        attributes[name] = value
-                    }
-                    val childNode = XmlNode(tag = tag, attributes = attributes)
-                    parseChildren(parser, childNode)
-                    parent.children.add(childNode)
+                    node.children.add(buildNode(parser))
                 }
                 XmlPullParser.TEXT -> {
-                    val text = parser.text?.trim()
-                    if (!text.isNullOrEmpty()) {
-                        textBuilder.append(text)
-                    }
+                    val chunk = parser.text?.trim()
+                    if (!chunk.isNullOrEmpty()) textBuilder.append(chunk)
                 }
                 XmlPullParser.END_TAG -> {
-                    val capturedText = textBuilder.toString().trim()
-                    if (capturedText.isNotEmpty()) {
-                        val nodeWithText = parent.copy(text = capturedText)
-                        parent.attributes.toMutableMap().also { map ->
-                            map.putAll(nodeWithText.attributes)
-                        }
-                    }
-                    return
+                    val captured = textBuilder.toString().trim()
+                    if (captured.isNotEmpty()) node.text = captured
+                    return node
                 }
             }
             eventType = parser.next()
         }
+        return node
     }
 }

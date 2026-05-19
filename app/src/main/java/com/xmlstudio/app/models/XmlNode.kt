@@ -4,7 +4,7 @@ data class XmlNode(
     val tag: String,
     val attributes: Map<String, String> = emptyMap(),
     val children: MutableList<XmlNode> = mutableListOf(),
-    val text: String? = null
+    var text: String? = null  // var so XmlParser can assign text content after parsing children
 )
 
 sealed class ParseResult {

@@ -5,9 +5,7 @@ import android.graphics.Typeface
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat
 import com.xmlstudio.app.models.XmlNode
-import com.xmlstudio.app.R
 
 class ComponentFactory(private val context: Context) {
 
@@ -53,13 +51,12 @@ class ComponentFactory(private val context: Context) {
         }
 
         val paddingAll = attrs["android:padding"]?.let { AttributeParser.parseDimension(context, it) } ?: 0
-        val paddingLeft = attrs["android:paddingLeft"]?.let { AttributeParser.parseDimension(context, it) } ?: paddingAll
-        val paddingTop = attrs["android:paddingTop"]?.let { AttributeParser.parseDimension(context, it) } ?: paddingAll
-        val paddingRight = attrs["android:paddingRight"]?.let { AttributeParser.parseDimension(context, it) } ?: paddingAll
+        val paddingLeft   = attrs["android:paddingLeft"]?.let   { AttributeParser.parseDimension(context, it) } ?: paddingAll
+        val paddingTop    = attrs["android:paddingTop"]?.let    { AttributeParser.parseDimension(context, it) } ?: paddingAll
+        val paddingRight  = attrs["android:paddingRight"]?.let  { AttributeParser.parseDimension(context, it) } ?: paddingAll
         val paddingBottom = attrs["android:paddingBottom"]?.let { AttributeParser.parseDimension(context, it) } ?: paddingAll
-
-        val paddingStart = attrs["android:paddingStart"]?.let { AttributeParser.parseDimension(context, it) } ?: paddingLeft
-        val paddingEnd = attrs["android:paddingEnd"]?.let { AttributeParser.parseDimension(context, it) } ?: paddingRight
+        val paddingStart  = attrs["android:paddingStart"]?.let  { AttributeParser.parseDimension(context, it) } ?: paddingLeft
+        val paddingEnd    = attrs["android:paddingEnd"]?.let    { AttributeParser.parseDimension(context, it) } ?: paddingRight
 
         view.setPaddingRelative(paddingStart, paddingTop, paddingEnd, paddingBottom)
     }
@@ -75,9 +72,9 @@ class ComponentFactory(private val context: Context) {
         val lp = ViewGroup.MarginLayoutParams(width, height)
 
         val marginAll = attrs["android:layout_margin"]?.let { AttributeParser.parseDimension(context, it) } ?: 0
-        lp.leftMargin = attrs["android:layout_marginLeft"]?.let { AttributeParser.parseDimension(context, it) } ?: marginAll
-        lp.topMargin = attrs["android:layout_marginTop"]?.let { AttributeParser.parseDimension(context, it) } ?: marginAll
-        lp.rightMargin = attrs["android:layout_marginRight"]?.let { AttributeParser.parseDimension(context, it) } ?: marginAll
+        lp.leftMargin   = attrs["android:layout_marginLeft"]?.let   { AttributeParser.parseDimension(context, it) } ?: marginAll
+        lp.topMargin    = attrs["android:layout_marginTop"]?.let    { AttributeParser.parseDimension(context, it) } ?: marginAll
+        lp.rightMargin  = attrs["android:layout_marginRight"]?.let  { AttributeParser.parseDimension(context, it) } ?: marginAll
         lp.bottomMargin = attrs["android:layout_marginBottom"]?.let { AttributeParser.parseDimension(context, it) } ?: marginAll
 
         return lp
@@ -150,6 +147,7 @@ class ComponentFactory(private val context: Context) {
         val scrollView = HorizontalScrollView(context)
         applyCommonAttributes(scrollView, node)
         scrollView.layoutParams = buildLayoutParams(node)
+
         val inner = LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
             layoutParams = ViewGroup.LayoutParams(
@@ -253,6 +251,7 @@ class ComponentFactory(private val context: Context) {
         return rb
     }
 
+    @Suppress("DEPRECATION")
     private fun createSwitch(node: XmlNode): Switch {
         val sw = Switch(context)
         sw.text = node.attributes["android:text"] ?: node.text ?: ""

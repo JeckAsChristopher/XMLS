@@ -3,8 +3,6 @@ package com.xmlstudio.app.renderer
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import com.xmlstudio.app.models.XmlNode
 import com.xmlstudio.app.models.ParseResult
 import com.xmlstudio.app.parser.XmlParser
 
@@ -36,16 +34,6 @@ class XmlRenderer(private val context: Context) {
                 }
             }
             is ParseResult.Failure -> RenderResult.Failure(parseResult.message)
-        }
-    }
-
-    fun renderFromNode(node: XmlNode): RenderResult {
-        return try {
-            val view = factory.create(node)
-                ?: return RenderResult.Failure("Could not render element: ${node.tag}")
-            RenderResult.Success(view)
-        } catch (e: Exception) {
-            RenderResult.Failure("Rendering error: ${e.message}")
         }
     }
 }

@@ -2,6 +2,7 @@ package com.xmlstudio.app.export
 
 import android.app.Application
 import android.net.Uri
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,13 @@ import com.xmlstudio.app.renderer.XmlRenderer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
+sealed class ExportState {
+    object Idle : ExportState()
+    object Loading : ExportState()
+    data class Rendered(val view: View) : ExportState()
+    data class Error(val message: String) : ExportState()
+}
 
 class ExportViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -42,25 +50,16 @@ class ExportViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private suspend fun parseAndRender(content: String) {
-        withContext(Dispatchers.Default) {
-            val result = renderer.render(content)
-            withContext(Dispatchers.Main) {
-                _state.value = when (result) {
-                    is XmlRenderer.RenderResult.Success -> ExportState.Rendered(result.view, content)
-                    is XmlRenderer.RenderResult.Failure -> ExportState.Error(result.message)
-                }
-            }
+        val result = withContext(Dispatchers.Default) {
+            renderer.render(content)
+        }
+        _state.value = when (result) {
+            is XmlRenderer.RenderResult.Success -> ExportState.Rendered(result.view)
+            is XmlRenderer.RenderResult.Failure -> ExportState.Error(result.message)
         }
     }
 
     fun reset() {
         _state.value = ExportState.Idle
     }
-}
-
-sealed class ExportState {
-    object Idle : ExportState()
-    object Loading : ExportState()
-    data class Rendered(val view: android.view.View, val xmlContent: String) : ExportState()
-    data class Error(val message: String) : ExportState()
 }

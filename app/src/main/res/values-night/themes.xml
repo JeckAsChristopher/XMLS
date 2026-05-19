@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Night theme: only override color attributes; WindowAnimStyle is shared and lives in values/themes.xml -->
     <style name="Theme.XMLStudio" parent="Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
         <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
@@ -19,12 +20,5 @@
         <item name="colorOnBackground">@color/md_theme_dark_onBackground</item>
         <item name="colorOutline">@color/md_theme_dark_outline</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimStyle</item>
-    </style>
-
-    <style name="WindowAnimStyle">
-        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
-        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 </resources>
