@@ -14,13 +14,12 @@
         android:background="@color/editor_surface">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/editor_surface"
-            app:titleTextColor="@color/editor_on_surface"
-            app:navigationIconTint="@color/editor_on_surface"
-            app:menuInflatedId="@menu/editor_menu"/>
+           android:id="@+id/toolbar"
+           android:layout_width="match_parent"
+           android:layout_height="?attr/actionBarSize"
+           android:background="@color/editor_surface"
+           app:titleTextColor="@color/editor_on_surface"
+           app:navigationIconTint="@color/editor_on_surface"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
